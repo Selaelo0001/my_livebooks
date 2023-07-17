@@ -1,0 +1,134 @@
+# Recursion
+
+## Head Recursion
+
+```elixir
+defmodule Tutorials.HeadRecursion.PrintDigits do
+  def upto(0), do: 0
+
+  def upto(nums) do
+    upto(nums - 1)
+    IO.puts(nums)
+  end
+end
+```
+
+```elixir
+Tutorials.HeadRecursion.PrintDigits.upto(3)
+```
+
+## Tail Recursion
+
+```elixir
+defmodule Tutorials.TailRecursion.PrintDigits do
+  def upto(0), do: 0
+
+  def upto(nums) do
+    IO.puts(nums)
+    upto(nums - 1)
+  end
+end
+```
+
+```elixir
+Tutorials.TailRecursion.PrintDigits.upto(3)
+```
+
+## Sum of digits
+
+```elixir
+defmodule Tutorials.Recursion.SumOfDigits do
+  def upto(0), do: 0
+
+  def upto(num) do
+    num + upto(num - 1)
+  end
+end
+```
+
+```elixir
+Tutorials.Recursion.SumOfDigits.upto(3)
+```
+
+```elixir
+defmodule Tutorials.Recursion.SumOfDigits2 do
+  def upto_tail_rec(num, acc \\ 0)
+  def upto_tail_rec(0, acc), do: acc
+
+  def upto_tail_rec(num, acc) do
+    upto_tail_rec(num - 1, acc + num)
+  end
+end
+```
+
+```elixir
+Tutorials.Recursion.SumOfDigits2.upto_tail_rec(3, 0)
+```
+
+```elixir
+Tutorials.Recursion.SumOfDigits2.upto_tail_rec(3)
+```
+
+## Factorial
+
+```elixir
+defmodule Tutorials.Recursion.Factorial do
+  def of(1), do: 1
+  def of(num), do: num * of(num - 1)
+end
+```
+
+```elixir
+alias Tutorials.Recursion.Factorial
+```
+
+```elixir
+Factorial.of(3)
+```
+
+```elixir
+Factorial.of(4)
+```
+
+```elixir
+defmodule Tutorials.Recursion.Factorial2 do
+  def of_tail_rec(num, acc \\ 1)
+  def of_tail_rec(1, acc), do: acc
+  def of_tail_rec(num, acc), do: of_tail_rec(num - 1, acc * num)
+end
+```
+
+```elixir
+alias Tutorials.Recursion.Factorial2
+```
+
+```elixir
+Factorial2.of_tail_rec(3)
+```
+
+```elixir
+Factorial2.of_tail_rec(4, 1)
+```
+
+## Reverse Number
+
+```elixir
+defmodule Tutorials.Recursion.ReverseNum do
+  def of(num, acc \\ 0)
+  def of(0, acc), do: acc
+
+  def of(num, acc) do
+    new_num = div(num, 10)
+    new_acc = acc * 10 + rem(num, 10)
+    of(new_num, new_acc)
+  end
+end
+```
+
+```elixir
+alias Tutorials.Recursion.ReverseNum
+```
+
+```elixir
+ReverseNum.of(12345)
+```

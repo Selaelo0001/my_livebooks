@@ -1,0 +1,171 @@
+# Lists are Linked List
+
+## Pattern matching
+
+```elixir
+list = [1, 2, 3]
+```
+
+```elixir
+hd(list)
+```
+
+```elixir
+[h | t] = list
+```
+
+```elixir
+h
+```
+
+```elixir
+t
+```
+
+```elixir
+list2 = ["s"]
+```
+
+```elixir
+[h | t] = list2
+```
+
+```elixir
+h
+```
+
+```elixir
+t
+```
+
+## List sum
+
+```elixir
+defmodule Tutorials.List.Lists do
+  def sum_simple([]), do: 0
+  def sum_simple([h | t]), do: h + sum_simple(t)
+end
+```
+
+```elixir
+Tutorials.List.Lists.sum_simple([1, 2, 3])
+```
+
+```elixir
+defmodule Tutorials.List.Lists2 do
+  def sum(nums), do: sum_tail_rec(nums)
+  def sum_tail_rec(nums, acc \\ 0)
+  def sum_tail_rec([], acc), do: acc
+  def sum_tail_rec([h | t], acc), do: sum_tail_rec(t, acc + h)
+end
+```
+
+```elixir
+Tutorials.List.Lists2.sum([1, 2, 3, 4])
+```
+
+## Reverse list
+
+```elixir
+defmodule Tutorials.List.Lists3 do
+  @spec reverse([any()], [any()]) :: [any()]
+  def reverse(elements, acc \\ [])
+  def reverse([], acc), do: acc
+  def reverse([h | t], acc), do: reverse(t, [h | acc])
+end
+```
+
+```elixir
+alias Tutorials.List.Lists3
+```
+
+```elixir
+Lists3.reverse([1, 2, 3])
+```
+
+```elixir
+[1, 3, 5, 7] |> Lists3.reverse()
+```
+
+## Map
+
+```elixir
+defmodule Tutorials.List.Lists4 do
+  def map(elements, func, acc \\ [])
+  def map([], _, acc), do: acc
+  def map([h | t], func, acc), do: map(t, func, [func.(h) | acc])
+end
+```
+
+```elixir
+alias Tutorials.List.Lists4
+```
+
+```elixir
+Lists4.map([2, 4, 6], fn x -> x * 2 end)
+```
+
+```elixir
+Lists3.reverse(Lists4.map([2, 4, 6], fn x -> x * 2 end))
+```
+
+```elixir
+Lists4.map([2, 4, 6], fn x -> x * 2 end) |> Lists3.reverse()
+```
+
+```elixir
+double = fn x -> x * 2 end
+```
+
+```elixir
+[1, 2, 3, 4] |> Lists4.map(double)
+```
+
+```elixir
+[1, 2, 3, 4] |> Lists4.map(double) |> Lists3.reverse()
+```
+
+```elixir
+[1, 2, 3, 4] |> Lists4.map(double) |> Enum.reverse()
+```
+
+## Concat
+
+```elixir
+[1, 2, 3] ++ [4, 5, 6]
+```
+
+```elixir
+defmodule Tutorials.List.Lists5 do
+  @spec concat([any()], [any()]) :: [any()]
+  def concat(src, dst), do: concat_func(src |> Enum.reverse(), dst)
+  defp concat_func([], dst), do: dst
+  defp concat_func([h | t], dst), do: concat_func(t, [h | dst])
+end
+```
+
+```elixir
+alias Tutorials.List.Lists5
+```
+
+```elixir
+Lists5.concat([1, 2, 3], [4, 5, 6])
+```
+
+## FlatMap
+
+```elixir
+defmodule Tutorials.List.Lists6 do
+  def flat_map(elements, func, acc \\ [])
+  def flat_map([], _, acc), do: acc
+  def flat_map([h | t], func, acc), do: flat_map(t, func, Lists5.concat(acc, func.(h)))
+end
+```
+
+```elixir
+alias Tutorials.List.Lists6
+```
+
+```elixir
+Lists6.flat_map([:a, :b, :c], fn x -> [x, x] end)
+```
